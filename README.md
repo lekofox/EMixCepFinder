@@ -23,7 +23,6 @@ EMixCepFinder has the following dependencies:
 
 ### EMixCepFinder.Domain
 
-- AutoMapper
 - FluentValidation
 
 ### EMixCepFinder.Infrastructure
@@ -44,15 +43,6 @@ The EMixCepFinder API has the following endpoints:
 - `GET /api/addressinfo/{cep}`: Retrieves information about a CEP, such as street name, city, and state.
 
 The API uses Refit to make requests to the ViaCep API and then returns the response to the client.
-
-## Status
-
-| Project                | Status                                                                                                                         |
-|------------------------|-------------------------------------------------------------------------------------------------------------------------------|
-| EMixCepFinder.API    | [![Build status](https://ci.appveyor.com/api/projects/status/{API_BUILD_STATUS}?svg=true)](https://ci.appveyor.com/project/lekofox/emixcepfinder) |
-| EMixCepFinder.Domain | [![Build status](https://ci.appveyor.com/api/projects/status/{DOMAIN_BUILD_STATUS}?svg=true)](https://ci.appveyor.com/project/lekofox/emixcepfinder) |
-| EMixCepFinder.Infrastructure  | [![Build status](https://ci.appveyor.com/api/projects/status/{INFRASTRUCTURE_BUILD_STATUS}?svg=true)](https://ci.appveyor.com/project/lekofox/emixcepfinder) |
-| EMixCepFinder.Service | [![Build status](https://ci.appveyor.com/api/projects/status/{SERVICE_BUILD_STATUS}?svg=true)](https://ci.appveyor.com/project/lekofox/emixcepfinder) |
 
 ## License
 
