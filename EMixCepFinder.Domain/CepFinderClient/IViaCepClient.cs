@@ -9,9 +9,9 @@ namespace EMixCepFinder.Domain.CepFinderClient
         /// <summary>
         /// Retrieves the address information from the ViaCep API based on the given CEP code.
         /// </summary>
-        /// <param name="cep">The CEP code to retrieve information for.</param>
+        /// <param name="postalCode">The CEP code to retrieve information for.</param>
         /// <returns>An <see cref="AddressInfo"/> object containing the address information.</returns>
-        [Get("/ws/{cep}/json/")]
-        Task<AddressInfoDto> GetAddressInfoAsync(string cep);
+        [Get("/ws/{postalCode}/json/")]
+        Task<AddressInfoDto> GetAddressInfoAsync(string postalCode);
     }
 }

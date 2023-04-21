@@ -10,32 +10,32 @@ public static class CepValidationExtension
     /// <summary>
     /// Determines whether the specified string is a valid Brazilian postal code (CEP).
     /// </summary>
-    /// <param name="cep">The string to validate.</param>
+    /// <param name="postalCode">The string to validate.</param>
     /// <returns><see langword="true"/> if the specified string is a valid Brazilian postal code (CEP); otherwise, <see langword="false"/>.</returns>
-    public static bool IsValid(this string cep) =>
-        ValidateCep(cep);
+    public static bool IsValid(this string postalCode) =>
+        ValidateCep(postalCode);
 
-    private static bool ValidateCep(string cep)
+    private static bool ValidateCep(string postalCode)
     {
-        if (cep.IsValidLength())
+        if (postalCode.IsValidLength())
         {
-            return regex.IsMatch(cep);
+            return regex.IsMatch(postalCode);
         }
 
         return false;
     }
 
-    private static bool IsValidLength(this string cep) =>
-        cep.Length == 9;
+    private static bool IsValidLength(this string postalCode) =>
+        postalCode.Length == 9;
 
     /// <summary>
     /// Normalizes a Brazilian postal code (CEP) by adding the hyphen if it is missing.
     /// </summary>
-    /// <param name="cep">The string to normalize.</param>
+    /// <param name="postalCode">The string to normalize.</param>
     /// <returns>The normalized Brazilian postal code (CEP).</returns>
-    public static string NormalizeCep(this string cep) =>
-        cep.Contains('-') ? cep : cep.ConvertCep();
+    public static string NormalizeCep(this string postalCode) =>
+        postalCode.Contains('-') ? postalCode : postalCode.ConvertCep();
 
-    private static string ConvertCep(this string cep) =>
-        cep.Substring(0, 5) + "-" + cep.Substring(5, 3);
+    private static string ConvertCep(this string postalCode) =>
+        postalCode.Substring(0, 5) + "-" + postalCode.Substring(5, 3);
 }

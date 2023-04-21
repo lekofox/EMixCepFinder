@@ -5,6 +5,6 @@ namespace EMixCepFinder.Domain.Service
 {
     public interface IViaCepService
     {
-        public Task<AddressInfoDto> GetAddressInfoAsync(string cep);
+        public Task<AddressInfoDto> GetAddressInfoAsync(string postalCode);
     }
 }

@@ -58,7 +58,7 @@ namespace EMixCepFinder.API.Controllers
             {
                 var result = await _cepFinderService.GetAddressInfosByState(state);
 
-                return Ok();
+                return Ok(result);
             }
             catch (ArgumentException ex)
             {

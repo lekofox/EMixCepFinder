@@ -25,13 +25,13 @@ namespace EMixCepFinder.Service.UnitFacts
         [InlineData("06340340")]
         [InlineData("08246025")]
         [InlineData("08246-025")]
-        public async Task GetAddressInfo_WithValidCep_ShouldBeExpected(string cep)
+        public async Task GetAddressInfo_WithValidCep_ShouldBeExpected(string postalCode)
         {
             //Arrange
-            cep = cep.NormalizeCep();
+            postalCode = postalCode.NormalizeCep();
             AddressInfoDto addressInfoDto = new()
             {
-                Cep = cep,
+                Cep = postalCode,
                 Bairro = "Any neighborhood",
                 Complemento = "",
                 Ddd = "11",
@@ -43,14 +43,14 @@ namespace EMixCepFinder.Service.UnitFacts
                 Uf = "any state"
             };
 
-            _viaCepServiceMock.Setup(s => s.GetAddressInfoAsync(cep)).Returns(Task.FromResult(addressInfoDto));
+            _viaCepServiceMock.Setup(s => s.GetAddressInfoAsync(postalCode)).Returns(Task.FromResult(addressInfoDto));
 
             //Act
-            var result = await _cepFinderService.GetAddressInfo(cep);
+            var result = await _cepFinderService.GetAddressInfo(postalCode);
 
             //Assert
             result.Should().BeOfType<AddressInfo>();
-            result.PostalCode.Should().Be(cep);
+            result.PostalCode.Should().Be(postalCode);
             result.Neighborhood.Should().Be(addressInfoDto.Bairro);
             result.Complement.Should().Be(addressInfoDto.Complemento);
             result.DDD.Should().Be(addressInfoDto.Ddd);
@@ -68,12 +68,12 @@ namespace EMixCepFinder.Service.UnitFacts
         [InlineData("012345----")]
         [InlineData("ImEMixCep")]
 
-        public async Task GetAddressInfo_WithInvalidCep_ShouldThrowArgumentException(string cep)
+        public async Task GetAddressInfo_WithInvalidCep_ShouldThrowArgumentException(string postalCode)
         {
             //Arrange
 
             //Act
-            var action = async () => await _cepFinderService.GetAddressInfo(cep);
+            var action = async () => await _cepFinderService.GetAddressInfo(postalCode);
 
             //Assert
             await action.Should().ThrowAsync<ArgumentException>().Where(ex => ex.Message == "Postal code provided is not in a valid format");
@@ -82,14 +82,14 @@ namespace EMixCepFinder.Service.UnitFacts
         [Theory]
         [InlineData("06340-345")]
         [InlineData("09099-999")]
-        public async Task GetAddressInfo_WithInexistentCep_ShouldThrowArgumentException(string cep)
+        public async Task GetAddressInfo_WithInexistentCep_ShouldThrowArgumentException(string postalCode)
         {
             //Arrange
             var nonExistentAddressInfo = new AddressInfoDto { Erro = true };
-            _viaCepServiceMock.Setup(s => s.GetAddressInfoAsync(cep)).Returns(Task.FromResult(nonExistentAddressInfo));
+            _viaCepServiceMock.Setup(s => s.GetAddressInfoAsync(postalCode)).Returns(Task.FromResult(nonExistentAddressInfo));
 
             //Act
-            var action = async () => await _cepFinderService.GetAddressInfo(cep);
+            var action = async () => await _cepFinderService.GetAddressInfo(postalCode);
 
             //Assert
             await action.Should().ThrowAsync<ArgumentException>().Where(ex => ex.Message == "Postal code not found");

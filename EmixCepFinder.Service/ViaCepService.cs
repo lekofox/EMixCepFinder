@@ -23,9 +23,9 @@ namespace EmixCepFinder.Service
         /// <summary>
         /// Retrieves address information for the specified postal code from the ViaCep API.
         /// </summary>
-        /// <param name="cep">The postal code to retrieve address information for.</param>
+        /// <param name="postalCode">The postal code to retrieve address information for.</param>
         /// <returns>An instance of the AddressInfoDto class containing the retrieved address information.</returns>
-        public async Task<AddressInfoDto> GetAddressInfoAsync(string cep) =>
-            await _viaCepClient.GetAddressInfoAsync(cep);
+        public async Task<AddressInfoDto> GetAddressInfoAsync(string postalCode) =>
+            await _viaCepClient.GetAddressInfoAsync(postalCode);
     }
 }
