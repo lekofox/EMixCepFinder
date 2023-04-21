@@ -20,6 +20,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EMixCepFinder.API.UnitTests
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EMixCepFinder.Service.UnitTests", "tests\EMixCepFinder.Service.UnitTests\EMixCepFinder.Service.UnitTests.csproj", "{B1CF3407-EDE4-4EAD-A660-E5BD9BD5CC0B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EMixCepFinder.ConsoleApplication", "EMixCepFinder.ConsoleApplication\EMixCepFinder.ConsoleApplication.csproj", "{226CB95C-E755-4C8A-BD0D-75A7FC17E4C7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -50,6 +52,10 @@ Global
 		{B1CF3407-EDE4-4EAD-A660-E5BD9BD5CC0B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B1CF3407-EDE4-4EAD-A660-E5BD9BD5CC0B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B1CF3407-EDE4-4EAD-A660-E5BD9BD5CC0B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{226CB95C-E755-4C8A-BD0D-75A7FC17E4C7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{226CB95C-E755-4C8A-BD0D-75A7FC17E4C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{226CB95C-E755-4C8A-BD0D-75A7FC17E4C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{226CB95C-E755-4C8A-BD0D-75A7FC17E4C7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
