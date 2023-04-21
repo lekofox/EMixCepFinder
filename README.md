@@ -12,7 +12,7 @@ EMixCepFinder is a solution for finding and retrieving information about Brazili
    dotnet ef database update --project EMixCepFinder.Infrastructure --startup-project EMixCepFinder.API
    ```
    Note: Replace `{MigrationName}` with a name for the migration.
-4. In Visual Studio, set the the solution Startup Projects to `EMixCepFinder.API` and 'EMixCepFinder.ConsoleApplication'.
+4. In Visual Studio, set the the solution Startup Projects to `EMixCepFinder.API` and `EMixCepFinder.ConsoleApplication`.
 5. Build and run the solution in Visual Studio.
 6. Use an HTTP client (e.g. Postman) or Swagger to make requests to the API endpoints.
 
@@ -25,10 +25,6 @@ EMixCepFinder has the following dependencies:
 - ASP.NET Core 3.1
 - Swashbuckle.AspNetCore
 - Refit
-
-### EMixCepFinder.Domain
-
-- FluentValidation
 
 ### EMixCepFinder.Infrastructure
 
@@ -50,7 +46,7 @@ The EMixCepFinder API has the following endpoints:
 
 ## License
 
-This project is licensed under the MIT License - see the `LICENSE` file for details.
+This project is licensed under the MIT License.
 
 ## Project Structure
 
@@ -59,7 +55,7 @@ The solution is divided into four main projects:
 - `EMixCepFinder.API`: This project is responsible for handling HTTP requests and returning HTTP responses to the client. It is the entry point to the application.
 - `EMixCepFinder.Domain`: This project contains the business logic of the application. It defines the entities, interfaces, and services that are used by other projects.
 - `EMixCepFinder.Infrastructure`: This project contains the implementation of the database access and other infrastructure concerns. It contains the data models and repository implementations.
-- `EMixCepFinder.Service`: This project is responsible for integrating with external services. It contains the implementation of the Refit clients that are used to make requests to external APIs.
+- `EMixCepFinder.Service`: This project is responsible for integrating with external services. It contains the implementation of the Refit clients that are used to make requests to external APIs and internal logic.
 
 ## Design Patterns and Best Practices
 
