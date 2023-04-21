@@ -35,7 +35,7 @@ namespace EMixCepFinder.Domain.Model
 
         [Column("Gia", TypeName = "nvarchar(500)")]
         public string GIA { get; set; }
-        
+
         [Column("Ddd", TypeName = "nvarchar(3)")]
         public string DDD { get; set; }
     }

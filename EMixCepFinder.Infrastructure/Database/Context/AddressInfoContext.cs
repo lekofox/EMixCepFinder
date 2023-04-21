@@ -10,7 +10,7 @@ namespace EMixCepFinder.Infrastructure.Database.Context
         }
         public AddressInfoContext()
         {
-            
+
         }
         public DbSet<AddressInfo> AddressInfo { get; set; }
 

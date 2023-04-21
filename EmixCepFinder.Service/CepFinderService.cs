@@ -70,13 +70,13 @@ namespace EmixCepFinder.Service
 
         public async Task<List<AddressInfo>> GetAddressInfosByState(string state)
         {
-            if(state.Length != 2)
+            if (state.Length != 2)
             {
                 throw new ArgumentException($"Invalid state format: {state}.\n State parameter must be a string with two max length");
             }
             var addressInfos = await _cepFinderRepository.SelectByState(state);
 
-            if(addressInfos.Count != 0)
+            if (addressInfos.Count != 0)
                 return addressInfos;
 
             throw new ArgumentException($"There is no address info for the provided State. State: {state}");

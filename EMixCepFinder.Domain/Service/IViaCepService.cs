@@ -1,5 +1,4 @@
-﻿
-using EMixCepFinder.Domain.Dto;
+﻿using EMixCepFinder.Domain.Dto;
 
 namespace EMixCepFinder.Domain.Service
 {
