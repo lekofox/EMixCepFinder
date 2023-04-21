@@ -64,4 +64,3 @@ The EMixCepFinder project follows several design patterns and best practices:
 - Dependency Injection: All dependencies are injected using .NET Core's built-in dependency injection container. This makes it easy to replace implementations of interfaces with mock objects during testing.
 - Repository Pattern: The `EMixCepFinder.Infrastructure` project implements the repository pattern to abstract away the details of data storage from the rest of the application. This makes it easy to change the data storage implementation without affecting the rest of the application.
 - CQRS Pattern: The `EMixCepFinder.Domain` project implements the Command Query Responsibility Segregation (CQRS) pattern to separate read and write operations. This makes it easier to reason about the system and optimize for performance.
-- FluentValidation: The `EMixCepFinder.Domain` project uses FluentValidation to
