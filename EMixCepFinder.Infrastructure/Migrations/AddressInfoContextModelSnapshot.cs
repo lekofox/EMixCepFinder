@@ -39,6 +39,11 @@ namespace EMixCepFinder.Infrastructure.Migrations
                         .HasColumnType("nvarchar(500)")
                         .HasColumnName("Complemento");
 
+                    b.Property<string>("DDD")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(3)")
+                        .HasColumnName("Ddd");
+
                     b.Property<string>("GIA")
                         .IsRequired()
                         .HasColumnType("nvarchar(500)")

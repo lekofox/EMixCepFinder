@@ -5,7 +5,7 @@
 namespace EMixCepFinder.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialDbMigration : Migration
+    public partial class AddInitialDbMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -24,7 +24,8 @@ namespace EMixCepFinder.Infrastructure.Migrations
                     UF = table.Column<string>(type: "char(2)", nullable: false),
                     Unidade = table.Column<long>(type: "bigint", nullable: false),
                     Ibge = table.Column<int>(type: "int", nullable: false),
-                    Gia = table.Column<string>(type: "nvarchar(500)", nullable: false)
+                    Gia = table.Column<string>(type: "nvarchar(500)", nullable: false),
+                    Ddd = table.Column<string>(type: "nvarchar(3)", nullable: false)
                 },
                 constraints: table =>
                 {

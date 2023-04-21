@@ -14,7 +14,11 @@ namespace EMixCepFinder.API.Controllers
             _cepFinderService = cepFinderService;
         }
 
-
+        /// <summary>
+        /// Get AddressInfo from ViaCep API by zip code.
+        /// </summary>
+        /// <param name="cep">Zip code to search for AddressInfo.</param>
+        /// <returns>Returns AddressInfo related to given zip code.</returns>
         [HttpGet]
         [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]

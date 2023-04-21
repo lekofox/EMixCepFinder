@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EMixCepFinder.Infrastructure.Migrations
 {
     [DbContext(typeof(AddressInfoContext))]
-    [Migration("20230420181113_InitialDbMigration")]
-    partial class InitialDbMigration
+    [Migration("20230420235135_AddInitialDbMigration")]
+    partial class AddInitialDbMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -41,6 +41,11 @@ namespace EMixCepFinder.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(500)")
                         .HasColumnName("Complemento");
+
+                    b.Property<string>("DDD")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(3)")
+                        .HasColumnName("Ddd");
 
                     b.Property<string>("GIA")
                         .IsRequired()
