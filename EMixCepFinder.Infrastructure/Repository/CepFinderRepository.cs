@@ -21,12 +21,21 @@ namespace EMixCepFinder.Infrastructure.Repository
             await _context.SaveChangesAsync();
         }
 
-        public async Task<AddressInfo> Select(string cep)
+        public async Task<AddressInfo> Select(string postalCode)
         {
-            return await GetAddressByPostalCode(cep);
+            return await GetAddressByPostalCode(postalCode);
         }
 
-        private async Task<AddressInfo> GetAddressByPostalCode(string cep) =>
-            await _context.AddressInfo.FirstOrDefaultAsync(ai => ai.PostalCode == cep);
+        public async Task<List<AddressInfo>> SelectByState(string state)
+        {
+            return await GetAddressInfosByState(state);
+        }
+
+        private async Task<List<AddressInfo>> GetAddressInfosByState(string state) =>
+            await _context.AddressInfo.Where(ai => ai.State == state).ToListAsync();
+
+
+        private async Task<AddressInfo> GetAddressByPostalCode(string postalCode) =>
+            await _context.AddressInfo.FirstOrDefaultAsync(ai => ai.PostalCode == postalCode);
     }
 }

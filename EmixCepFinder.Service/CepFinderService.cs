@@ -3,7 +3,6 @@ using EMixCepFinder.Domain.Model;
 using EMixCepFinder.Domain.Repository;
 using EMixCepFinder.Domain.Service;
 
-
 namespace EmixCepFinder.Service
 {
     /// <summary>
@@ -22,8 +21,8 @@ namespace EmixCepFinder.Service
         public CepFinderService(ICepFinderRepository cepFinderRepository,
                                 IViaCepService viaCepService)
         {
-            _cepFinderRepository = cepFinderRepository ?? throw new ArgumentNullException(nameof(cepFinderRepository));
-            _viaCepService = viaCepService ?? throw new ArgumentNullException(nameof(viaCepService));
+            _cepFinderRepository = cepFinderRepository;
+            _viaCepService = viaCepService;
         }
 
         /// <summary>
@@ -45,21 +44,21 @@ namespace EmixCepFinder.Service
         /// <summary>
         /// Retrieves the address information for the specified postal code.
         /// </summary>
-        /// <param name="cep">The postal code to be searched.</param>
+        /// <param name="postalCode">The postal code to be searched.</param>
         /// <returns>The address information for the specified postal code.</returns>
         /// <exception cref="ArgumentException">Thrown when the postal code provided is not in a valid format or is not found.</exception>
-        public async Task<AddressInfo> GetAddressInfo(string cep)
+        public async Task<AddressInfo> GetAddressInfo(string postalCode)
         {
-            string normalizedCep = cep.NormalizeCep();
-            if (!normalizedCep.IsValid())
+            string normalizedPostalCode = postalCode.NormalizeCep();
+            if (!normalizedPostalCode.IsValid())
                 throw new ArgumentException("Postal code provided is not in a valid format");
 
-            var addressInfo = await _cepFinderRepository.Select(normalizedCep);
+            var addressInfo = await _cepFinderRepository.Select(normalizedPostalCode);
 
             if (addressInfo != null)
                 return addressInfo;
 
-            var addressInfoDto = await _viaCepService.GetAddressInfoAsync(normalizedCep);
+            var addressInfoDto = await _viaCepService.GetAddressInfoAsync(normalizedPostalCode);
 
             if (addressInfoDto.Erro)
                 throw new ArgumentException("Postal code not found");
@@ -67,6 +66,20 @@ namespace EmixCepFinder.Service
             addressInfo = addressInfoDto.Map();
             await CreateAddressInfo(addressInfo);
             return addressInfo;
+        }
+
+        public async Task<List<AddressInfo>> GetAddressInfosByState(string state)
+        {
+            if(state.Length != 2)
+            {
+                throw new ArgumentException($"Invalid state format: {state}.\n State parameter must be a string with two max length");
+            }
+            var addressInfos = await _cepFinderRepository.SelectByState(state);
+
+            if(addressInfos.Count != 0)
+                return addressInfos;
+
+            throw new ArgumentException($"There is no address info for the provided State. State: {state}");
         }
     }
 }

@@ -43,7 +43,12 @@ namespace EMixCepFinder.ConsoleApp
                 var content = await response.Content.ReadAsStringAsync();
                 var addressInfo = JsonConvert.DeserializeObject<AddressInfo>(content);
                 Console.WriteLine($"Address: {addressInfo.Street}");
-                Console.WriteLine($"City: {addressInfo.City} - {addressInfo.State}");
+                Console.WriteLine($"Neighborhood: {addressInfo.Neighborhood}");
+                Console.WriteLine($"City: {addressInfo.City}");
+                Console.WriteLine($"State: {addressInfo.State}");
+                Console.WriteLine($"IBGE: {addressInfo.IBGE}");
+                Console.WriteLine($"GIA: {addressInfo.GIA}");
+                Console.WriteLine($"DDD: {addressInfo.DDD}");
                 Console.WriteLine($"CEP: {addressInfo.PostalCode}");
                 Console.ReadLine();
             }
@@ -59,7 +64,7 @@ namespace EMixCepFinder.ConsoleApp
             var state = Console.ReadLine();
 
             var httpClient = new HttpClient();
-            var baseAddress = "https://localhost:7139"; // Replace with the appropriate base URL for the API
+            var baseAddress = "https://localhost:7139";
             var url = $"{baseAddress}/addressinfo/state/state={state}";
             var response = await httpClient.GetAsync(url);
 
@@ -68,6 +73,7 @@ namespace EMixCepFinder.ConsoleApp
                 var content = await response.Content.ReadAsStringAsync();
                 var addressInfos = JsonConvert.DeserializeObject<AddressInfo[]>(content);
                 Console.WriteLine($"Address information for state {state}:");
+                 
                 foreach (var addressInfo in addressInfos)
                 {
                     Console.WriteLine($"Address: {addressInfo.Street}");
@@ -75,6 +81,10 @@ namespace EMixCepFinder.ConsoleApp
                     Console.WriteLine($"CEP: {addressInfo.PostalCode}");
                     Console.WriteLine();
                 }
+            }
+            else if (response.StatusCode != null)
+            {
+                Console.WriteLine("State does not have any street in our database, please select a postal code from this and try again later");
             }
             else
             {

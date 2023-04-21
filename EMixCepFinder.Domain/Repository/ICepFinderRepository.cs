@@ -6,6 +6,8 @@ namespace EMixCepFinder.Domain.Repository
     {
         public Task Create(AddressInfo addressInfo);
 
-        public Task<AddressInfo> Select(string cep);
+        public Task<AddressInfo> Select(string postalCode);
+
+        public Task<List<AddressInfo>> SelectByState(string state);
     }
 }
