@@ -1,5 +1,4 @@
 using EmixCepFinder.Service;
-using EmixCepFinder.Service.Extensions;
 using EMixCepFinder.Domain.Dto;
 using EMixCepFinder.Domain.Model;
 using EMixCepFinder.Domain.Repository;
@@ -7,14 +6,14 @@ using EMixCepFinder.Domain.Service;
 using FluentAssertions;
 using Moq;
 
-namespace EMixCepFinder.Service.UnitTests
+namespace EMixCepFinder.Service.UnitFacts
 {
-    public class CepFinderServiceUnitTests
+    public class CepFinderServiceUnitFacts
     {
         private readonly CepFinderService _cepFinderService;
         private readonly Mock<ICepFinderRepository> _cepFinderRepositoryMock;
         private readonly Mock<IViaCepService> _viaCepServiceMock;
-        public CepFinderServiceUnitTests()
+        public CepFinderServiceUnitFacts()
         {
             _cepFinderRepositoryMock = new Mock<ICepFinderRepository>();
             _viaCepServiceMock = new Mock<IViaCepService>();
@@ -44,7 +43,7 @@ namespace EMixCepFinder.Service.UnitTests
                 Uf = "any state"
             };
 
-            _viaCepServiceMock.Setup(s=> s.GetAddressInfoAsync(cep)).Returns(Task.FromResult(addressInfoDto));
+            _viaCepServiceMock.Setup(s => s.GetAddressInfoAsync(cep)).Returns(Task.FromResult(addressInfoDto));
 
             //Act
             var result = await _cepFinderService.GetAddressInfo(cep);
@@ -56,7 +55,7 @@ namespace EMixCepFinder.Service.UnitTests
             result.Complement.Should().Be(addressInfoDto.Complemento);
             result.DDD.Should().Be(addressInfoDto.Ddd);
             result.GIA.Should().Be(addressInfoDto.Gia);
-            result.IBGE.Should().Be(int.TryParse(addressInfoDto.Ibge, out var i) ? i :0);
+            result.IBGE.Should().Be(int.TryParse(addressInfoDto.Ibge, out var i) ? i : 0);
             result.City.Should().Be(addressInfoDto.Localidade);
             result.Street.Should().Be(addressInfoDto.Logradouro);
             result.Unit.Should().Be(long.TryParse(addressInfoDto.Siafi, out var l) ? l : 0);
@@ -79,7 +78,7 @@ namespace EMixCepFinder.Service.UnitTests
             //Assert
             await action.Should().ThrowAsync<ArgumentException>().Where(ex => ex.Message == "Postal code provided is not in a valid format");
         }
-        
+
         [Theory]
         [InlineData("06340-345")]
         [InlineData("09099-999")]
@@ -94,6 +93,52 @@ namespace EMixCepFinder.Service.UnitTests
 
             //Assert
             await action.Should().ThrowAsync<ArgumentException>().Where(ex => ex.Message == "Postal code not found");
+        }
+
+        [Fact]
+        public async Task GetAddressInfosByState_ValidState_ReturnsAddressInfos()
+        {
+            // Arrange
+            var state = "SP";
+            var expectedAddressInfos = new List<AddressInfo> { new AddressInfo { State = state } };
+            _cepFinderRepositoryMock.Setup(r => r.SelectByState(state))
+                                   .ReturnsAsync(expectedAddressInfos);
+
+            // Act
+            var result = await _cepFinderService.GetAddressInfosByState(state);
+
+            // Assert
+            result.Should().BeEquivalentTo(expectedAddressInfos);
+        }
+
+        [Fact]
+        public async Task GetAddressInfosByState_InvalidState_ThrowsArgumentException()
+        {
+            // Arrange
+            var state = "INVALID_STATE";
+
+            // Act
+            var act = async () => await _cepFinderService.GetAddressInfosByState(state);
+
+            // Assert
+            await act.Should().ThrowAsync<ArgumentException>()
+                     .WithMessage($"Invalid state format: {state}.*");
+        }
+
+        [Fact]
+        public async Task GetAddressInfosByState_StateWithNoAddressInfos_ThrowsArgumentException()
+        {
+            // Arrange
+            var state = "SP";
+            _cepFinderRepositoryMock.Setup(r => r.SelectByState(It.IsAny<string>()))
+                           .ReturnsAsync(new List<AddressInfo>());
+
+            // Act
+            var act = async () => await _cepFinderService.GetAddressInfosByState(state);
+
+            // Assert
+            await act.Should().ThrowAsync<ArgumentException>()
+                     .WithMessage($"There is no address info for the provided State. State: {state}");
         }
     }
 }
