@@ -5,8 +5,9 @@ EMixCepFinder is a solution for finding and retrieving information about Brazili
 ## How to Use
 
 1. Clone the repository to your local machine.
-2. Use a command prompt to navigate to the root directory of the repository.
-3. Run the following commands to set up the database:
+2. Set the appropriate appsettings.json configuration.
+3. Use a command prompt to navigate to the root directory of the repository.
+4. Run the following commands to set up the database:
    ```
    dotnet ef migrations add {MigrationName} --project EMixCepFinder.Infrastructure --startup-project EMixCepFinder.API
    dotnet ef database update --project EMixCepFinder.Infrastructure --startup-project EMixCepFinder.API
