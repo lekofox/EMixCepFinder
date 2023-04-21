@@ -14,7 +14,7 @@ EMixCepFinder is a solution for finding and retrieving information about Brazili
    Note: Replace `{MigrationName}` with a name for the migration.
 4. In Visual Studio, set the the solution Startup Projects to `EMixCepFinder.API` and `EMixCepFinder.ConsoleApplication`.
 5. Build and run the solution in Visual Studio.
-6. Use an HTTP client (e.g. Postman) or Swagger to make requests to the API endpoints.
+6. Use an HTTP client (e.g. Postman) or Swagger to make requests to the API endpoints or the built in ConsoleApplication.
 
 ## Dependencies
 
