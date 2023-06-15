@@ -3,7 +3,10 @@ using EMixCepFinder.Domain.Service;
 using EMixCepFinder.Infrastructure.Database.Extensions;
 using EmixCepFinder.Service;
 using EMixCepFinder.Infrastructure.Repository;
+using EMixCepFinder.Infrastructure.Caching;
 using EMixCepFinder.Domain.Repository;
+using EMixCepFinder.Domain.Caching;
+using EMixCepFinder.Infrastructure.Caching.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,10 +17,13 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddLocalDb(builder.Configuration);
+builder.Services.AddRedisCache();
+builder.Services.AddDistributedMemoryCache();
 
 //DI internal services
 builder.Services.AddScoped<ICepFinderService, CepFinderService>();
 builder.Services.AddScoped<ICepFinderRepository, CepFinderRepository>();
+builder.Services.AddScoped<ICachingService, CachingService>();
 
 // Add external services
 builder.Services.AddViaCepService(builder.Configuration);

@@ -1,4 +1,5 @@
 using EMixCepFinder.API.Controllers;
+using EMixCepFinder.Domain.Caching;
 using EMixCepFinder.Domain.Model;
 using EMixCepFinder.Domain.Service;
 using FluentAssertions;
@@ -11,12 +12,14 @@ namespace EMixCepFinder.API.UnitTests.Controllers
     public class CepFinderControllerUnitTests
     {
         private readonly Mock<ICepFinderService> _cepFinderService;
+        private readonly Mock<ICachingService> _cachingServiceMock;
         private AddressInfoController _addressInfoController;
 
         public CepFinderControllerUnitTests()
         {
             _cepFinderService = new Mock<ICepFinderService>();
-            _addressInfoController = new AddressInfoController(_cepFinderService.Object);
+            _cachingServiceMock = new Mock<ICachingService>();
+            _addressInfoController = new AddressInfoController(_cepFinderService.Object, _cachingServiceMock.Object);
         }
 
         [Fact]

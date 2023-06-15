@@ -1,5 +1,8 @@
+using EMixCepFinder.Domain.Caching;
+using EMixCepFinder.Domain.Model;
 using EMixCepFinder.Domain.Service;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace EMixCepFinder.API.Controllers
 {
@@ -8,10 +11,12 @@ namespace EMixCepFinder.API.Controllers
     public class AddressInfoController : ControllerBase
     {
         private readonly ICepFinderService _cepFinderService;
+        private readonly ICachingService _cachingService;
 
-        public AddressInfoController(ICepFinderService cepFinderService)
+        public AddressInfoController(ICepFinderService cepFinderService, ICachingService cachingService)
         {
             _cepFinderService = cepFinderService;
+            _cachingService = cachingService;
         }
 
         /// <summary>
@@ -28,8 +33,17 @@ namespace EMixCepFinder.API.Controllers
         {
             try
             {
+                var cacheResult = await _cachingService.GetAsync(postalCode);
+                if (!string.IsNullOrWhiteSpace(cacheResult))
+                {
+                    var jsonResult = JsonConvert.DeserializeObject<AddressInfo>(cacheResult);
+                    return Ok(jsonResult);
+                }
+
                 var result = await _cepFinderService.GetAddressInfo(postalCode);
 
+                var jsonData = JsonConvert.SerializeObject(result);
+                await _cachingService.SetAsync(postalCode, jsonData);
                 return Ok(result);
             }
             catch (ArgumentException ex)
